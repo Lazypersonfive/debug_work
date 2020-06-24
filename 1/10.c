@@ -4,31 +4,38 @@
 
 double bisection(int p, int q, double (*func)(int, int, double));
 double f(int p, int q, double x);
-int main() {
+
+int main()
+{
     int p;
     int q;
-    scanf("%d%d", &p, &q);
+    scanf("%d %d", &p, &q);
     printf("%.4f\n", bisection(p, q, f));
     return 0;
 }
 
-double bisection(int p, int q, double (*func)(int, int, double)) {
+/* Calculate the value of p*x+q */
+double bisection(int p, int q, double (*func)(int, int, double))
+{
     double a = -20;
     double b = 20;
     double m = (a + b) / 2;
-    while (1){      
-    if (fabs(func(p, q, m)) < EPSILON)
-        printf("%.4f", m);
-    else{
-        if (func(p, q, m) * func(p, q, a) < 0)
-            b = m;
-        else
-            a = m;
 
+    while (1) {
+        if (fabs(func(p, q, m)) < EPSILON) {
+            return m;
+        } else {
+            if (func(p, q, m) * func(p, q, a) < 0)
+                b = m;
+            else
+                a = m;
+        }
+        m = (a + b) / 2;
     }
-    }
-    }
+}
 
-double f(int p, int q, double x) {
+/* Calculate the value you want */
+double f(int p, int q, double x)
+{
     return p * x + q;
 }
