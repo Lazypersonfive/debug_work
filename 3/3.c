@@ -1,94 +1,58 @@
 #include <stdio.h>
 
+void space(int, int);
+
 int main()
 {
     int matrix[100][100];
     int m;
     int n;
-    scanf("%d%d", &m, &n);
-
+    scanf("%d %d", &m, &n);
+    int mix = ((m >= n) ? n : m);
+    int opration = 2 * mix - 1 + (m > n);
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             scanf("%d", &matrix[i][j]);
         }
     }
-
-    int j;
-    int count = 0;
-    if (m == 1) {
-        for (j = 0; j < n; j++) {
-            printf("%d", matrix[0][j]);
-            count++;
-            if (count != m * n) {
-                printf(" ");
+    int counter = 0;
+    for (int i = 1; i <= opration; i++) {
+        switch (i % 4) {
+        case 1:
+            for (int a = (i / 4); a < (n - i / 4); a++) {
+                printf("%d", matrix[i / 4][a]);
+                counter++;
+                space(counter, m * n);
             }
-        }
-    } else if (n == 1) {
-        for (j = 0; j < m; j++) {
-            printf("%d", matrix[j][0]);
-            count++;
-            if (count != m * n) {
-                printf(" ");
+            break;
+        case 2:
+            for (int a = (i / 4 + 1); a < (m - i / 4); a++) {
+                printf("%d", matrix[a][n - i / 4 - 1]);
+                counter++;
+                space(counter, m * n);
             }
-        }
-    } else {
-        for (int i = 0; count < m * n; i++) {
-            switch (i % 4) {
-            case 0:
-                for (j = i / 4; j < n - i / 4 - 1; j++) {
-                    printf("%d", matrix[i / 4][j]);
-                    count++;
-                    if (count != m * n) {
-                        printf(" ");
-                    }
-                    if (count == m * n - 1) {
-                        printf("%d", matrix[i / 4][++j]);
-                        count++;
-                    }
-                }
-                break;
-            case 1:
-                for (j = i / 4; j < m - i / 4 - 1; j++) {
-                    printf("%d", matrix[j][n - 1 - i / 4]);
-                    count++;
-                    if (count != m * n) {
-                        printf(" ");
-                    }
-                    if (count == m * n - 1) {
-                        printf("%d", matrix[++j][n - i / 4 - 1]);
-                        count++;
-                    }
-                }
-                break;
-            case 2:
-                for (j = n - 1 - i / 4; j > i / 4; j--) {
-                    printf("%d", matrix[m - i / 4 - 1][j]);
-                    count++;
-                    if (count != m * n) {
-                        printf(" ");
-                    }
-                    if (count == m * n - 1) {
-                        printf("%d", matrix[m - i / 4 - 1][--j]);
-                        count++;
-                    }
-                }
-                break;
-            case 3:
-                for (j = m - 1 - i / 4; j > i / 4; j--) {
-                    printf("%d", matrix[j][i / 4]);
-                    count++;
-                    if (count != m * n) {
-                        printf(" ");
-                    }
-                    if (count == m * n - 1) {
-                        printf("%d", matrix[--j][i / 4]);
-                        count++;
-                    }
-                }
-                break;
+            break;
+        case 3:
+            for (int a = (i / 4 + 1); a < (n - i / 4); a++) {
+                printf("%d", matrix[m - i / 4 - 1][n - a - 1]);
+                counter++;
+                space(counter, m * n);
             }
+            break;
+        case 0:
+            for (int a = (i / 4); a < (m - i / 4); a++) {
+                printf("%d", matrix[m - a - 1][i / 4 - 1]);
+                counter++;
+                space(counter, m * n);
+            }
+            break;
         }
     }
-
     return 0;
+}
+void space(int a, int b)
+{
+    if (a != b) {
+        printf(" ");
+    }
 }

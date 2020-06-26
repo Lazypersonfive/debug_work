@@ -1,66 +1,74 @@
 #include <stdio.h>
+
 int main()
 {
     int matrix[100][100];
     int m;
     int n;
-    int i;
-    int j;
-    int startX;
-    int startY;
-    int endX;
-    int endY;
-
-    startX = 0;
-    startY = 0;
     scanf("%d %d", &m, &n);
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
+    int k = m * n;
+    int m0 = m;
+    int n0 = n;
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
             scanf("%d", &matrix[i][j]);
         }
     }
-
-    while (startX * 2 < m && startY * 2 < n) {
-        endX = m - 1 - startX;
-        endY = n - 1 - startY;
-
-        if (startY < endY) {
-            for (j = startY; j <= endY; j++) {
-                printf("%d", matrix[startX][j]);
-                if (j < endY || startX < endX) {
+    if (m == 1 || n == 1) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                printf("%d", matrix[i][j]);
+                if (j != n - 1)
                     printf(" ");
-                }
             }
+            if (i != m - 1)
+                printf(" ");
         }
+        return 0;
+    }
 
-        if (startX < endX) {
-            for (i = startX + 1; i <= endX; i++) {
-                printf("%d", matrix[i][endY]);
-                if (i < endX || startY < endY) {
-                    printf(" ");
-                }
-            }
-        }
+    int i = 0;
 
-        if (endX > startX && startY < endY) {
-            for (j = endY - 1; j >= startY; j--) {
-                printf("%d", matrix[endX][j]);
-                if (j > startY || startX < endX - 1) {
-                    printf(" ");
-                }
-            }
+    while (i != k) {
+        for (int j = n - n0; j < n0 - 1; j++) {
+            printf("%d", matrix[m - m0][j]);
+            i++;
+            if (i == k)
+                break;
+            else
+                printf(" ");
         }
-
-        if (endX - 1 > startX && startY < endY) {
-            for (i = endX - 1; i >= startX + 1; i--) {
-                printf("%d", matrix[i][startX]);
-                if (i > startX + 1 || startY < endY - 1) {
-                    printf(" ");
-                }
-            }
+        for (int j = m - m0; j < m0 - 1; j++) {
+            printf("%d", matrix[j][n0 - 1]);
+            i++;
+            if (i == k)
+                break;
+            else
+                printf(" ");
         }
-        startX++;
-        startY++;
+        for (int j = n0 - 1; j > n - n0; j--) {
+            printf("%d", matrix[m0 - 1][j]);
+            i++;
+            if (i == k)
+                break;
+            else
+                printf(" ");
+        }
+        for (int j = m0 - 1; j > m - m0; j--) {
+            printf("%d", matrix[j][n - n0]);
+            i++;
+            if (i == k)
+                break;
+            else
+                printf(" ");
+        }
+        n0--;
+        m0--;
+        if (m == n && m % 2 && n - n0 == n0 - 1) {
+            printf("%d", matrix[n - n0][n - n0]);
+            i++;
+        }
     }
 
     return 0;
