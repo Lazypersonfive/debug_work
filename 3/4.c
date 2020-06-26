@@ -6,7 +6,7 @@ int main() {
     int n;
     scanf("%d %d",&m , &n);
     int mix = ((m >= n)?n:m);
-    int opration = 2 * mix - 1 + (m > n);     //操作方向描述变量
+    int opration = 2 * mix - 1 + (m > n);    
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
             scanf("%d", &matrix[i][j]);        
